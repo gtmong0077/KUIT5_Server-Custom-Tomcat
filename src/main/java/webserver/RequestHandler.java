@@ -13,7 +13,7 @@ public class RequestHandler implements Runnable{
         this.connection = connection;
     }
 
-    // hello
+    
     @Override
     public void run() {
         log.log(Level.INFO, "New Client Connect! Connected IP : " + connection.getInetAddress() + ", Port : " + connection.getPort());
