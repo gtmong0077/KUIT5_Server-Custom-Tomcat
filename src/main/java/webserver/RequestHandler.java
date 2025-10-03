@@ -1,5 +1,44 @@
 package webserver;
 
+import http.request.HttpRequest;
+import http.response.HttpResponse;
+
+import java.io.*;
+import java.net.Socket;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class RequestHandler implements Runnable {
+    Socket connection;
+    private static final Logger log = Logger.getLogger(RequestHandler.class.getName());
+
+    public RequestHandler(Socket connection) {
+        this.connection = connection;
+    }
+
+    @Override
+    public void run() {
+        log.log(Level.INFO, "New Client Connect! IP: " + connection.getInetAddress() + ", Port: " + connection.getPort());
+
+        try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            HttpRequest httpRequest = HttpRequest.from(br);
+            HttpResponse httpResponse = new HttpResponse(out);
+
+            RequestMapper requestMapper = new RequestMapper(httpRequest, httpResponse);
+            requestMapper.proceed();
+
+        } catch (Exception e) {
+            log.log(Level.SEVERE, e.getMessage());
+            System.out.println(Arrays.toString(e.getStackTrace()));
+        }
+    }
+}
+
+/*
+package webserver;
+
 import db.MemoryUserRepository;
 import model.User;
 import java.io.*;
@@ -62,7 +101,8 @@ public class RequestHandler implements Runnable{
                 }
             }
 
-            /*
+            */
+/*
             if (method.equals("POST") && fullPath.equals("/user/signup")) {
                 // contentLength 만큼 본문 읽기
                 char[] bodyChars = new char[contentLength];
@@ -84,7 +124,8 @@ public class RequestHandler implements Runnable{
                 response302Header(dos, "/index.html");
                 return;
             }
-            */
+            *//*
+
 
             // GET 방식 회원가입 처리
             if (method.equals("GET") && fullPath.startsWith("/user/signup")) {
@@ -109,7 +150,8 @@ public class RequestHandler implements Runnable{
                 return;
             }
 
-            /*
+            */
+/*
             // GET 회원가입 폼 요청은 /user/form.html로 처리
             if (method.equals("GET") && fullPath.equals("/user/form")) {
                 String formPage = "webapp/user/form.html";
@@ -122,9 +164,11 @@ public class RequestHandler implements Runnable{
                 }
                 return;
             }
-            */
+            *//*
+
             if (method.equals("POST") && fullPath.equals("/user/signup")) {
-                /*String formPage = "webapp/user/form.html";
+                */
+/*String formPage = "webapp/user/form.html";
                 if (Files.exists(Paths.get(formPage))) {
                     byte[] body = Files.readAllBytes(Paths.get(formPage));
                     response302Header(dos, "/index.html");
@@ -132,7 +176,8 @@ public class RequestHandler implements Runnable{
                 } else {
                     // 404 처리
                 }
-                return;*/
+                return;*//*
+
                 char[] bodyChars = new char[contentLength];
                 int readLen = br.read(bodyChars, 0, contentLength);
                 String body = new String(bodyChars, 0, readLen);
@@ -235,11 +280,13 @@ public class RequestHandler implements Runnable{
             //byte[] body = "Hello World".getBytes();
             //response200Header(dos, body.length);
             //responseBody(dos, body);
-            /*if (fullPath.equals("/favicon.ico")) {
+            */
+/*if (fullPath.equals("/favicon.ico")) {
                 dos.writeBytes("HTTP/1.1 204 No Content\r\n\r\n");
                 dos.flush();
                 return;
-            }*/
+            }*//*
+
 
         } catch (IOException e) {
             log.log(Level.SEVERE,e.getMessage());
@@ -321,6 +368,8 @@ public class RequestHandler implements Runnable{
     }
 
 }
+
+*/
 
 /*
 
