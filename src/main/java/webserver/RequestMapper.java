@@ -22,10 +22,16 @@ public class RequestMapper {
         controllerMap.put(UrlPath.LOGIN.getPath(), new LoginController());
         controllerMap.put(UrlPath.LIST.getPath(), new ListController());
     }
+//    static {
+//        controllerMap.put(UrlPath.INDEX.getPath(), new ForwardController());
+//        controllerMap.put(UrlPath.SIGNUP.getPath(), new ForwardController());
+//        controllerMap.put(UrlPath.LOGIN.getPath(), new ForwardController());
+//        controllerMap.put(UrlPath.LIST.getPath(), new ForwardController());
+//    }
 
     public void proceed() throws Exception {
         String url = req.getUrl();
-        System.out.println("Requested URL: " + req.getUrl());
+        //System.out.println("Requested URL: " + req.getUrl());
         // "/"는 index.html로 전환
         if (url.equals("/")) {
             url = "/index.html"; // "/" 요청을 index.html로 변환
@@ -39,7 +45,5 @@ public class RequestMapper {
         } else {
             controller.execute(req, resp);
         }
-
-
     }
 }

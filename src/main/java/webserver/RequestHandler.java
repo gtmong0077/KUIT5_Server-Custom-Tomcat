@@ -19,6 +19,7 @@ public class RequestHandler implements Runnable {
 
     @Override
     public void run() {
+        //로그 기록: 어떤 클라이언트가 연결되었는지(IP,Port)출력.
         log.log(Level.INFO, "New Client Connect! IP: " + connection.getInetAddress() + ", Port: " + connection.getPort());
 
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
@@ -368,22 +369,5 @@ public class RequestHandler implements Runnable{
     }
 
 }
-
-*/
-
-/*
-
-전체 동작 흐름
-클라이언트가 서버에 접속 → Socket 생성. Socket 이란 결국 데이터 통로 누가 Socket에 적으면 다른쪽에서 읽는다.
-
-RequestHandler의 run() 실행.
-
-서버는 클라이언트 요청을 읽을 수 있는 상태가 됨. (현 코드는 요청 분석은 생략하고 무조건 "Hello World" 응답) ->수정
-
-response200Header()로 HTTP 응답 헤더 작성.
-
-responseBody()로 본문 전송.
-
-클라이언트는 브라우저에서 "Hello World" 화면 확인 가능
 
 */
